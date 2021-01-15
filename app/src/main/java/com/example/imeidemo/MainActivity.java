@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     //hi i am tushar
 
-    // Hi i am Breeze From Nashik
+    // Hi i am Breeze From Nashik ok thanks
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
