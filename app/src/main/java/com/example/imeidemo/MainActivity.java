@@ -12,13 +12,12 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView t1;
-    Button b1,b2;
-
+    Button b1;
+//hi bro hi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
         t1 = findViewById(R.id.textView);
         b1 = findViewById(R.id.button);
-        b2=findViewById(R.id.button2);
 
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
@@ -35,13 +33,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 @SuppressLint("MissingPermission") String imei = telephonyManager.getDeviceId();
                 t1.setText(imei);
-            }
-        });
-
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Clicked ME", Toast.LENGTH_SHORT).show();
             }
         });
 
