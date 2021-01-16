@@ -3,6 +3,7 @@ package com.example.imeidemo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class signup extends AppCompatActivity {
     private static final String IMEI="IMEI";
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
