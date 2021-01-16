@@ -20,23 +20,22 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class Login extends AppCompatActivity {
 
 
-    private EditText username,password;
-    private Button login,signup;
+    private EditText username, password;
+    private Button login, signup;
 
-    private FirebaseFirestore db=FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private static final String USERNAME="Username";
-    private static final String PASSWORD="Password";
+    private static final String USERNAME = "Username";
+    private static final String PASSWORD = "Password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        username=findViewById(R.id.username);
-        password=findViewById(R.id.password);
-        login=findViewById(R.id.login);
-        signup=findViewById(R.id.signup);
-
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+        login = findViewById(R.id.login);
+        signup = findViewById(R.id.signup);
 
 
         // LOGIN Logic
@@ -44,21 +43,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Getting the Values into String Variable
-
-                String txt1=username.getText().toString();
-                String txt2=password.getText().toString();
-
-                // Initial Check
-                if(TextUtils.isEmpty(txt1) || TextUtils.isEmpty(txt2))
-                {
-                    Toast.makeText(Login.this, "Empty Credentials !!!", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-
-                    loadnote();
-                }
+                loadnote();
 
             }
         });
@@ -76,34 +61,41 @@ public class Login extends AppCompatActivity {
 
     }
 
+
+
     public void loadnote() {
 
-        String txt_u=username.getText().toString();
-        String txt_p=password.getText().toString();
+        String txt_u = username.getText().toString();
+        String txt_p = password.getText().toString();
 
-        DocumentReference noteRef = db.document("User"+txt_u);
-        noteRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                    String s1 = documentSnapshot.getString(USERNAME);
-                    String s2 = documentSnapshot.getString(PASSWORD);
-                    if ((s1==txt_u) && (s2==txt_p)) {
-                        Toast.makeText(Login.this, "Login Successful ", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Login.this, MainActivity.class));// Change Main Activity to Shopping Cart Activity
-                    }
-                    else
-                    {
-                        Toast.makeText(Login.this, "Error : ", Toast.LENGTH_SHORT).show();
-                    }
+        if (TextUtils.isEmpty(txt_u) || TextUtils.isEmpty(txt_p)) {
+            Toast.makeText(Login.this, "Empty Credentials !!!", Toast.LENGTH_SHORT).show();
+        } else {
 
+            Toast.makeText(this, username + "" + password, Toast.LENGTH_SHORT).show();
+
+            DocumentReference noteRef = db.document("User" + txt_u);
+            noteRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        String s1 = documentSnapshot.getString(USERNAME);
+                        String s2 = documentSnapshot.getString(PASSWORD);
+                        if ((s1 == txt_u) && (s2 == txt_p)) {
+                            Toast.makeText(Login.this, "Login Successful ", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Login.this, MainActivity.class));// Change Main Activity to Shopping Cart Activity
+                        } else {
+                            Toast.makeText(Login.this, "Error : ", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Login.this, "Error ", Toast.LENGTH_SHORT).show();
-            }
-        });
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(Login.this, "Error ", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
