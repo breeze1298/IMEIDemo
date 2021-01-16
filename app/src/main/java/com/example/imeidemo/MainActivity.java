@@ -7,13 +7,16 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,16 +28,9 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    String TAG="mainactivity";
+    private String imei_number;
 
-    TextView t1;
-    Button b1;
-//hi bro hi
-
-    //hi i am tushar
-
-
-    // Hi i am Breeze From Nashik ok thanks
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,38 +39,27 @@ public class MainActivity extends AppCompatActivity {
         //create firebase instance
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        t1 = findViewById(R.id.textView);
-        b1 = findViewById(R.id.button);
-
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        imei_number=telephonyManager.getDeviceId();
 
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                @SuppressLint("MissingPermission") String imei = telephonyManager.getDeviceId();
-                t1.setText(imei);
-                Map<String, Object> user = new HashMap<>();
-                user.put("first", "Ada");
-                user.put("last", "Lovelace");
-                user.put("born", 1815);
+        if (imei_number.length()>0)
+        {
 
-// Add a new document with a generated ID
-                db.collection("users")
-                        .add(user)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
-            }
-        });
+            // 10 Second's Delay Initially to verify , We Can add Progress Bar also here.
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(MainActivity.this,Login.class));
+                }
+            }, 10000);
+
+        }
+        else
+        {
+            Toast.makeText(this, "Error : ", Toast.LENGTH_SHORT).show();
+        }
+
 
 
 

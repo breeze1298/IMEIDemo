@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "573572370096",
+    "project_id": "imeidemo-b6ff1",
+    "storage_bucket": "imeidemo-b6ff1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573572370096:android:a71a35efc8febdcfcef575",
+        "android_client_info": {
+          "package_name": "com.example.imeidemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "573572370096-to6lctdtan9kgafa3mqmttovar6nd214.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEEsEPZOhMZErEDvKCDQJrG38OBk4RM08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "573572370096-to6lctdtan9kgafa3mqmttovar6nd214.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
