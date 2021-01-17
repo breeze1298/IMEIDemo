@@ -11,8 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,8 +22,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class Login extends AppCompatActivity {
 
 
-    private EditText username, password;
-    private Button login, signup;
+    EditText txt_username, txt_password;
+    Button b_login, b_signup;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -32,25 +34,25 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        login = findViewById(R.id.login);
-        signup = findViewById(R.id.signup);
+        txt_username = findViewById(R.id.username);
+        txt_password = findViewById(R.id.password);
+        b_login = findViewById(R.id.login);
+        b_signup = findViewById(R.id.signup);
 
 
         // LOGIN Logic
-        login.setOnClickListener(new View.OnClickListener() {
+        b_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                loadnote();
+               loadnote();
 
             }
         });
 
         // Redirecting to the Sign up page
 
-        signup.setOnClickListener(new View.OnClickListener() {
+        b_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Login.this, signup.class));
@@ -63,39 +65,48 @@ public class Login extends AppCompatActivity {
 
 
 
-    public void loadnote() {
+       public void loadnote()
+       {
 
-        String txt_u = username.getText().toString();
-        String txt_p = password.getText().toString();
+        String txt_u = txt_username.getText().toString();
+        String txt_p = txt_password.getText().toString();
 
-        if (TextUtils.isEmpty(txt_u) || TextUtils.isEmpty(txt_p)) {
+        if (txt_u.isEmpty() || txt_p.isEmpty())
+        {
             Toast.makeText(Login.this, "Empty Credentials !!!", Toast.LENGTH_SHORT).show();
-        } else {
-
-            Toast.makeText(this, username + "" + password, Toast.LENGTH_SHORT).show();
-
-            DocumentReference noteRef = db.document("User" + txt_u);
-            noteRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    if (documentSnapshot.exists()) {
-                        String s1 = documentSnapshot.getString(USERNAME);
-                        String s2 = documentSnapshot.getString(PASSWORD);
-                        if ((s1 == txt_u) && (s2 == txt_p)) {
-                            Toast.makeText(Login.this, "Login Successful ", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Login.this, MainActivity.class));// Change Main Activity to Shopping Cart Activity
-                        } else {
-                            Toast.makeText(Login.this, "Error : ", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(Login.this, "Error ", Toast.LENGTH_SHORT).show();
-                }
-            });
         }
-    }
+        else
+            {
+
+            Toast.makeText(this, txt_u +"", Toast.LENGTH_SHORT).show();
+
+            DocumentReference noteRef = db.collection("User").document(txt_u);
+
+            noteRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful())
+                    {
+                        Toast.makeText(Login.this, txt_u+"", Toast.LENGTH_SHORT).show();
+                        DocumentSnapshot document = task.getResult();
+                        String s1 = document.getString(USERNAME);
+                        String s2 = document.getString(PASSWORD);
+                        if (document != null)
+                        {
+                            if ((s1.equalsIgnoreCase(txt_u)) && (s2.equalsIgnoreCase(txt_p)))
+                            {
+                                Toast.makeText(Login.this, "Login Successful ", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(Login.this, MainActivity.class));// Change Main Activity to Shopping Cart Activity
+                            } else
+                            {
+                                Toast.makeText(Login.this, "Error : ", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                     }
+            }
+            });
+
+            }
+       }
 }

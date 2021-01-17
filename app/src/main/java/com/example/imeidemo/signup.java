@@ -61,7 +61,7 @@ public class signup extends AppCompatActivity {
                 {
                     Toast.makeText(signup.this, "Empty Credentials !!! ", Toast.LENGTH_SHORT).show();
                 }
-                else if (txt_password.length()<6)
+                else if (password.length()<6)
                 {
                     Toast.makeText(signup.this, "Password too Short !", Toast.LENGTH_SHORT).show();
                 }
@@ -84,7 +84,6 @@ public class signup extends AppCompatActivity {
 
         String txt1=username.getText().toString();
         String txt2=password.getText().toString();
-
 
         Map<String, Object> note = new HashMap<>();
         note.put(USERNAME,txt1);
