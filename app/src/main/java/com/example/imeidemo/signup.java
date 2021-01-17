@@ -25,7 +25,7 @@ public class signup extends AppCompatActivity {
 
     private EditText username,password,verify_password;
     private Button register;
-    private String txt_username,txt_password,txt_verify,imei;
+    String imei;
 
     private static final String USERNAME = "Username";
     private static final String PASSWORD="Password";
@@ -44,7 +44,7 @@ public class signup extends AppCompatActivity {
         verify_password=findViewById(R.id.verify_password);
         register=findViewById(R.id.register);
 
-        // Getting the value from EditText
+        // Getting IMEI Number
 
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         imei=telephonyManager.getDeviceId();
@@ -61,20 +61,17 @@ public class signup extends AppCompatActivity {
                 {
                     Toast.makeText(signup.this, "Empty Credentials !!! ", Toast.LENGTH_SHORT).show();
                 }
-                else if (password.length()<6)
+                else if (txt2.length()<6)
                 {
                     Toast.makeText(signup.this, "Password too Short !", Toast.LENGTH_SHORT).show();
                 }
-                else
+                else if(txt2.contentEquals(txt3))
                 {
                     savenote();
-
-                    //After Registering go to Shopping Page Directly.
-
-                    username.setText("");
-                    password.setText("");
-                    verify_password.setText("");
-
+                }
+                else
+                {
+                    Toast.makeText(signup.this, "Password Doesn't Match !! ", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -83,18 +80,22 @@ public class signup extends AppCompatActivity {
     private void savenote() {
 
         String txt1=username.getText().toString();
-        String txt2=password.getText().toString();
+        String txt2=verify_password.getText().toString();
+        String i=imei;
 
         Map<String, Object> note = new HashMap<>();
         note.put(USERNAME,txt1);
         note.put(PASSWORD,txt2);
-        note.put(IMEI,imei);
+        note.put(IMEI,i);
 
-        db.collection("User").document(txt1).set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("User").document(i).set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(signup.this, "Registered Successfully ", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(signup.this,MainActivity.class));// Change the MainActivity to Shopping List Activity
+                username.setText("");
+                password.setText("");
+                verify_password.setText("");
+                startActivity(new Intent(signup.this,product.class));// Change the MainActivity to Shopping List Activity
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
