@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".admin">
+
+
+    <EditText
+        android:id="@+id/product_name"
+        android:layout_width="203dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="106dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="50dp"
+        android:layout_x="23dp"
+        android:layout_y="112dp"
+        android:ems="10"
+        android:hint="Enter Product Name" />
+
+    <EditText
+        android:id="@+id/product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="270dp"
+        android:layout_x="21dp"
+        android:layout_y="184dp"
+        android:ems="10"
+        android:hint="Product Price" />
+
+    <EditText
+        android:id="@+id/image_url"
+        android:layout_width="177dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="334dp"
+        android:layout_x="35dp"
+        android:layout_y="264dp"
+        android:ems="10"
+        android:hint="Image Address"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/btnsave"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="474dp"
+        android:layout_x="175dp"
+        android:layout_y="498dp"
+        android:text="Save"
+        app:srcCompat="@android:drawable/checkbox_on_background" />
+
+    <Button
+        android:id="@+id/choose"
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="43dp"
+        android:layout_marginBottom="225dp"
+        android:layout_weight="1"
+        android:layout_x="255dp"
+        android:layout_y="203dp"
+        android:background="@android:color/holo_green_light"
+        android:fontFamily="serif"
+        android:text="choose"></Button>
+
+    <Button
+        android:id="@+id/upload"
+        android:layout_width="133dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="229dp"
+        android:layout_marginBottom="164dp"
+        android:layout_weight="1"
+        android:layout_x="256dp"
+        android:layout_y="263dp"
+        android:background="@android:color/holo_green_light"
+        android:fontFamily="serif"
+        android:text="upload"></Button>
+
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="145dp"
+        android:layout_height="130dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginEnd="14dp"
+        android:layout_x="257dp"
+        android:layout_y="56dp" />
+
+</AbsoluteLayout>
