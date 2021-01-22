@@ -34,7 +34,7 @@ public class product extends AppCompatActivity  {
     private FirestoreRecyclerAdapter adapter;
 
     private Button btn_cart,btn_order;
-    private String cname,sig_cname;
+    private String cnameMain,sig_cname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class product extends AppCompatActivity  {
 
 
         Intent getData = getIntent();
-        cname = getData.getStringExtra("cname");//Getting the Customer Name From Main Activity if he is already Registered
+        cnameMain = getData.getStringExtra("cname");//Getting the Customer Name From Main Activity if he is already Registered
         sig_cname=getData.getStringExtra("sig_cname");//Geting Customer Name from Signup Page
 
 
@@ -90,18 +90,18 @@ public class product extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
 
-                if (cname == null)
+                if (cnameMain.isEmpty())
                 {
-                    Toast.makeText(product.this, "Via Main Activity", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(product.this,ViewCart.class);
-                    intent.putExtra("cname",cname);
+                    intent.putExtra("sig_cname",sig_cname);
                     startActivity(intent);
 
                 }
                 else
                 {
+                    Toast.makeText(product.this, "Via Main Activity", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(product.this,ViewCart.class);
-                    intent.putExtra("sig_cname",sig_cname);
+                    intent.putExtra("cname",cnameMain);
                     startActivity(intent);
 
                 }
@@ -131,6 +131,7 @@ public class product extends AppCompatActivity  {
                     Toast.makeText(product.this, pnm, Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(product.this,ViewProduct.class);
                     intent.putExtra("PRODUCT",pnm);
+                    intent.putExtra("cname",cnameMain);
                     startActivity(intent);
 
 

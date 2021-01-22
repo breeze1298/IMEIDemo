@@ -39,7 +39,7 @@ public class ViewProduct extends AppCompatActivity {
 
     private Button btnadd;
 
-    private String cname,sig_cname;
+    private String cnameProduct,sig_cname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class ViewProduct extends AppCompatActivity {
         Intent getData = getIntent();
         productnm = getData.getStringExtra("PRODUCT");
         //Got the Customer Name from MainActivity to Product to ViewProduct
-        cname = getData.getStringExtra("cname");
+        cnameProduct = getData.getStringExtra("cname");
         sig_cname=getData.getStringExtra("sig_cname");
 
        getDetails();
@@ -64,52 +64,17 @@ public class ViewProduct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String doc = cname;
-                if (doc.isEmpty()) {
-                    DocumentReference noteRef = db.document("Product/" + productnm);
-                    noteRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if (documentSnapshot.exists()) {
-                                String name = documentSnapshot.getString(KEY_NAME);
-                                String price = documentSnapshot.getString(KEY_PRICE);
+                saveData();
 
-                                Map<String, Object> note = new HashMap<>();
-                                note.put(KEY_NAME, name);
-                                note.put(KEY_PRICE, price);
-                                db.collection("Cart").document(doc).set(note)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-
-                                                Toast.makeText(ViewProduct.this, p1 + " Added to Cart ", Toast.LENGTH_LONG).show();
-
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(ViewProduct.this, "Error ", Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                            }
-                        }
-                    });
-                }
-                else
-                {
-                    Toast.makeText(ViewProduct.this, "Error", Toast.LENGTH_SHORT).show();
-                }
             }
-
-            });
+        });
 
     }
 
 
     private void getDetails()
     {
-        Toast.makeText(this, cname, Toast.LENGTH_SHORT).show();
+
         DocumentReference noteRef = db.document("Product/" + productnm);
         noteRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -139,8 +104,47 @@ public class ViewProduct extends AppCompatActivity {
         });
     }
 
-    private void save()
+    private void saveData()
     {
+        String doc = cnameProduct;
+        Toast.makeText(this, doc, Toast.LENGTH_LONG).show();
+        if (doc.isEmpty()) {
 
+            Toast.makeText(ViewProduct.this, "Error", Toast.LENGTH_SHORT).show();
+
+        }
+        else
+        {
+            DocumentReference noteRef = db.document("Product/" + productnm);
+            noteRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        String name = documentSnapshot.getString(KEY_NAME);
+                        String price = documentSnapshot.getString(KEY_PRICE);
+
+                        Map<String, Object> note = new HashMap<>();
+                        note.put(KEY_NAME, name);
+                        note.put(KEY_PRICE, price);
+                        db.collection("Cart").document(doc).set(note)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                        Toast.makeText(ViewProduct.this, name + " Added to Cart ", Toast.LENGTH_LONG).show();
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(ViewProduct.this, "Error Database", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                    }
+                }
+            });
+
+        }
     }
 }
