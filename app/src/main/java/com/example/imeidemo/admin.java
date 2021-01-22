@@ -1,5 +1,6 @@
 package com.example.imeidemo;
 
+import androidx.activity.OnBackPressedDispatcherOwner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -87,7 +88,6 @@ public class admin extends AppCompatActivity {
                // Toast.makeText(admin.this, "Details Saved in Database", Toast.LENGTH_SHORT).show();
 
                 saveNote();
-                Toast.makeText(getApplicationContext(), "Details Inserted Successfully", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(admin.this, product.class));
 
             }
@@ -201,7 +201,11 @@ public class admin extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
+                                pname.setText("");
+                                price.setText("");
+                                img_url.setText("");
                                 Toast.makeText(admin.this, "Details Saved", Toast.LENGTH_LONG).show();
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

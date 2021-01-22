@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSION_CODE = 100;
     private String imei_number;
-    private static final String USERNAME = "Customer_Name";
+    private static final String CUSTOMERNAME = "Customer_Name";
     private static final String IMEI = "IMEI";
     private Button alog;
     int cnt=0;
@@ -99,13 +99,15 @@ public class MainActivity extends AppCompatActivity {
         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
         if (task.isSuccessful()) {
         DocumentSnapshot document = task.getResult();
-        String s1 = document.getString(USERNAME);
+        String s1 = document.getString(CUSTOMERNAME);
         String s2 = document.getString(IMEI);
         String i = imei_number;
             if (i.equalsIgnoreCase(s2))
             {
                         Toast.makeText(MainActivity.this, "Welcome Back " + s1, Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(MainActivity.this, product.class));
+                        Intent intent=new Intent(MainActivity.this, product.class);
+                        intent.putExtra("cname",s1);
+                        startActivity(intent);
 
             } else {
 

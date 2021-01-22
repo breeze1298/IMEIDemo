@@ -12,20 +12,17 @@
         android:layout_width="259dp"
         android:layout_height="43dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="15dp"
         android:layout_marginBottom="244dp"
         android:text=""
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/t2"
         android:layout_width="131dp"
         android:layout_height="43dp"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="244dp"
         android:text=""
@@ -34,8 +31,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="1.0" />
+        />
 
     <ImageView
         android:id="@+id/imageView"
@@ -49,5 +45,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_background" />
+
+    <Button
+        android:id="@+id/btnaddtocart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="139dp"
+        android:layout_marginEnd="139dp"
+        android:layout_marginBottom="120dp"
+        android:text="add to cart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

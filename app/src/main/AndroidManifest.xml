@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IMEIDemo">
-        <activity android:name=".ViewProduct"></activity>
+        <activity android:name=".ViewCart"></activity>
+        <activity android:name=".ViewProduct" />
         <activity android:name=".admin_login" />
         <activity android:name=".sign_up" />
         <activity android:name=".admin" />

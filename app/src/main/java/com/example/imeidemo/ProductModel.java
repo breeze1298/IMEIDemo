@@ -1,6 +1,8 @@
 package com.example.imeidemo;
 
-public class ProductModel {
+import com.google.firebase.firestore.DocumentSnapshot;
+
+public class ProductModel  {
     //To long when changed the price to int
     private String name,price;
 

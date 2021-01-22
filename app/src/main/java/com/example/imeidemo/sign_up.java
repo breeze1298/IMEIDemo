@@ -1,5 +1,6 @@
 package com.example.imeidemo;
 
+import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -94,12 +95,15 @@ private void savenote() {
          @Override
             public void onSuccess(Void aVoid) {
         Toast.makeText(sign_up.this, "Registered Successfully ", Toast.LENGTH_SHORT).show();
+        String sig_cname=cname.getText().toString();
         cname.setText("");
         cnumber.setText("");
         cpassword.setText("");
         caddress.setText("");
-        //Moving to the Products Page
-        startActivity(new Intent(sign_up.this,product.class));
+        //Moving to the Products Page with Customer name send through Intent
+        Intent intent=new Intent(sign_up.this,product.class);
+        intent.putExtra("sig_cname",sig_cname);
+        startActivity(intent);
         }
         }).addOnFailureListener(new OnFailureListener() {
          @Override
