@@ -43,7 +43,8 @@
         android:ems="10"
         android:gravity="start|top"
         android:hint="Address"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/C_password"

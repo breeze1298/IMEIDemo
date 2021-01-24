@@ -36,6 +36,7 @@ public class admin extends AppCompatActivity {
     private static final String KEY_NAME = "name";
     private static final String KEY_IMAGE = "image";
     private static final String KEY_PRICE = "price";
+    private static final String KEY_DESC="description";
 
 
     private static final int PICK_IMAGE_REQUEST = 234;
@@ -43,7 +44,7 @@ public class admin extends AppCompatActivity {
     private ImageView imageView;
     private Uri filePath;
     private StorageReference storageReference;
-    private EditText pname, price, img_url;
+    private EditText pname, price, img_url, desc;
 
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -61,10 +62,9 @@ public class admin extends AppCompatActivity {
 
         img_url = findViewById(R.id.image_url);
         imageView = findViewById(R.id.product_image);
+        desc=findViewById(R.id.product_desc);
 
         storageReference = FirebaseStorage.getInstance().getReference();
-
-
 
         buttonChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,10 +82,6 @@ public class admin extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //String name=pname.getText().toString();
-                //dbHandler.insert(name);
-               // Toast.makeText(admin.this, "Details Saved in Database", Toast.LENGTH_SHORT).show();
 
                 saveNote();
                 startActivity(new Intent(admin.this, product.class));
@@ -124,14 +120,10 @@ public class admin extends AppCompatActivity {
             {
                 final ProgressDialog progressDialog =new ProgressDialog(this);
                 progressDialog.setTitle("Uploading");
-                //  String userID = user.getUid();
-                //Bundle b=getIntent().getExtras();
+
                 final String name=pname.getText().toString();
-                final String p =price.getText().toString();
 
                 progressDialog.show();
-
-                //  final StorageReference  riversRef =storageReference.child("images/users/" + userID + "/" + Name +"_"+rno+".jpg");
 
                 final StorageReference  riversRef =storageReference.child("Product/"+ name +".jpg");
 
@@ -149,11 +141,8 @@ public class admin extends AppCompatActivity {
                                 img_url.setText(img);
                             }
                         });
-                        //Task<Uri> uriimage=storageReference.getDownloadUrl();
                         Toast.makeText(getApplicationContext(),"File Uploaded" ,Toast.LENGTH_LONG).show();
-
                         imageView.setImageBitmap(null);
-                        //etdocimage.setText((CharSequence) uriimage.toString());
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -184,18 +173,18 @@ public class admin extends AppCompatActivity {
             final String name=pname.getText().toString();
             final String p =price.getText().toString();
             String image = img_url.getText().toString();
+            String dec=desc.getText().toString();
             String doc=name;
 
-            if (TextUtils.isEmpty(name) || TextUtils.isEmpty(p) || TextUtils.isEmpty(image)) {
+            if (TextUtils.isEmpty(name) || TextUtils.isEmpty(p) || TextUtils.isEmpty(image) || TextUtils.isEmpty(dec)) {
                 Toast.makeText(admin.this, "Empty credentials!", Toast.LENGTH_SHORT).show();
             } else {
-
-
 
                 Map<String, Object> note = new HashMap<>();
                 note.put(KEY_NAME,name );
                 note.put(KEY_PRICE,p);
                 note.put(KEY_IMAGE,image);
+                note.put(KEY_DESC,dec);
 
                 db.collection("Product").document(doc).set(note)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -204,6 +193,7 @@ public class admin extends AppCompatActivity {
                                 pname.setText("");
                                 price.setText("");
                                 img_url.setText("");
+                                desc.setText("");
                                 Toast.makeText(admin.this, "Details Saved", Toast.LENGTH_LONG).show();
 
                             }

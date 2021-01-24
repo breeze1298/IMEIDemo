@@ -8,37 +8,50 @@
     android:layout_height="match_parent">
 
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="260dp"
+        android:layout_height="54dp"
+        android:text="Product Name"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/firestore_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="147dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="2dp"
+        android:text="Price"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/firestore_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/firestore_list"
-        android:layout_width="409dp"
-        android:layout_height="539dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="594dp"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/btnViewCart"
         android:layout_width="210dp"
         android:layout_height="61dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="100dp"
         android:text="View Cart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firestore_list" />
+        app:layout_constraintTop_toBottomOf="@+id/firestore_list"
+        app:layout_constraintVertical_bias="0.981" />
 
-    <Button
-        android:id="@+id/btnOrder"
-        android:layout_width="200dp"
-        android:layout_height="61dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="4dp"
-        android:text="Place Order"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firestore_list" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

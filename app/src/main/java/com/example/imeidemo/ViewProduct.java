@@ -22,13 +22,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.sql.Array;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ViewProduct extends AppCompatActivity {
 
     String productnm;
-    TextView p1, p2;
+    TextView p1, p2,p3;
     ImageView pimage;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -36,6 +38,7 @@ public class ViewProduct extends AppCompatActivity {
     private static final String KEY_NAME = "name";
     private static final String KEY_IMAGE = "image";
     private static final String KEY_PRICE = "price";
+    private static final String KEY_DESC="description";
 
     private Button btnadd;
 
@@ -48,6 +51,7 @@ public class ViewProduct extends AppCompatActivity {
 
         p1 = findViewById(R.id.t1);
         p2 = findViewById(R.id.t2);
+        p3=findViewById(R.id.t3);
         pimage = findViewById(R.id.imageView);
         btnadd = findViewById(R.id.btnaddtocart);
 
@@ -83,9 +87,11 @@ public class ViewProduct extends AppCompatActivity {
                     String name = documentSnapshot.getString(KEY_NAME);
                     String price = documentSnapshot.getString(KEY_PRICE);
                     String image = documentSnapshot.getString(KEY_IMAGE);
+                    String desc=documentSnapshot.getString(KEY_DESC);
 
                     p1.setText(name);
                     p2.setText(price);
+                    p3.setText(desc);
                     //Getting the image url and loading the image in the image view
                     //Context context = pimage.getContext();
                     Picasso.get().load(image).into(pimage);
@@ -106,45 +112,37 @@ public class ViewProduct extends AppCompatActivity {
 
     private void saveData()
     {
-        String doc = cnameProduct;
-        Toast.makeText(this, doc, Toast.LENGTH_LONG).show();
-        if (doc.isEmpty()) {
-
+        String doc = cnameProduct;//Customer Name
+        if (doc.isEmpty())
+        {
             Toast.makeText(ViewProduct.this, "Error", Toast.LENGTH_SHORT).show();
-
         }
         else
         {
-            DocumentReference noteRef = db.document("Product/" + productnm);
-            noteRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    if (documentSnapshot.exists()) {
-                        String name = documentSnapshot.getString(KEY_NAME);
-                        String price = documentSnapshot.getString(KEY_PRICE);
+           String s1=p1.getText().toString();
+           String s2=p2.getText().toString();
 
-                        Map<String, Object> note = new HashMap<>();
-                        note.put(KEY_NAME, name);
-                        note.put(KEY_PRICE, price);
-                        db.collection("Cart").document(doc).set(note)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
+            Map<String, Object> note = new HashMap<>();
+            note.put(KEY_NAME, s1);
+            note.put(KEY_PRICE, s2);
+            String s=s1;// Product Name
+            db.collection(doc).document(s).set(note)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
 
-                                        Toast.makeText(ViewProduct.this, name + " Added to Cart ", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ViewProduct.this, s1 + " Added to Cart ", Toast.LENGTH_LONG).show();
 
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(ViewProduct.this, "Error Database", Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                    }
-                }
-            });
-
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ViewProduct.this, "Error in Database", Toast.LENGTH_LONG).show();
+                        }
+                    });
         }
+
     }
 }
+

@@ -15,7 +15,7 @@
         android:layout_marginLeft="100dp"
         android:layout_marginTop="50dp"
         android:layout_x="23dp"
-        android:layout_y="112dp"
+        android:layout_y="56dp"
         android:ems="10"
         android:hint="Enter Product Name" />
 
@@ -28,21 +28,21 @@
         android:layout_marginLeft="100dp"
         android:layout_marginTop="270dp"
         android:layout_x="21dp"
-        android:layout_y="184dp"
+        android:layout_y="115dp"
         android:ems="10"
         android:hint="Product Price" />
 
     <EditText
         android:id="@+id/image_url"
-        android:layout_width="177dp"
+        android:layout_width="143dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="334dp"
-        android:layout_x="35dp"
-        android:layout_y="264dp"
+        android:layout_x="259dp"
+        android:layout_y="335dp"
         android:ems="10"
         android:hint="Image Address"
         android:inputType="textPersonName" />
@@ -102,5 +102,17 @@
         android:layout_marginEnd="14dp"
         android:layout_x="257dp"
         android:layout_y="56dp" />
+
+    <EditText
+        android:id="@+id/product_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="108dp"
+        android:layout_x="22dp"
+        android:layout_y="175dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Description RAM: ROM:  "
+        android:inputType="textMultiLine"
+        android:text="Descriptio RAM ROM" />
 
 </AbsoluteLayout>

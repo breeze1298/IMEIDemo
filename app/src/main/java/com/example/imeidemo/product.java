@@ -2,11 +2,14 @@ package com.example.imeidemo;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,8 +36,10 @@ public class product extends AppCompatActivity  {
 
     private FirestoreRecyclerAdapter adapter;
 
-    private Button btn_cart,btn_order;
-    private String cnameMain,sig_cname;
+    private Button btn_cart;
+    private String cnameMain;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +47,10 @@ public class product extends AppCompatActivity  {
         setContentView(R.layout.activity_product);
 
         btn_cart=findViewById(R.id.btnViewCart);
-        btn_order=findViewById(R.id.btnOrder);
 
 
         Intent getData = getIntent();
         cnameMain = getData.getStringExtra("cname");//Getting the Customer Name From Main Activity if he is already Registered
-        sig_cname=getData.getStringExtra("sig_cname");//Geting Customer Name from Signup Page
-
 
         //Instance of Firebase
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -92,8 +94,7 @@ public class product extends AppCompatActivity  {
 
                 if (cnameMain.isEmpty())
                 {
-                    Intent intent=new Intent(product.this,ViewCart.class);
-                    intent.putExtra("sig_cname",sig_cname);
+                    Intent intent=new Intent(product.this,MainActivity.class);
                     startActivity(intent);
 
                 }
@@ -112,7 +113,7 @@ public class product extends AppCompatActivity  {
         });
 
 
-        }
+    }
 
 
     public class ProductViewHolder extends  RecyclerView.ViewHolder  {
@@ -165,4 +166,35 @@ public class product extends AppCompatActivity  {
         adapter.startListening();
     }*/
 
+    @Override
+    public void onBackPressed()
+    {
+
+        // Create the object of
+        // AlertDialog Builder class
+        AlertDialog.Builder builder = new AlertDialog.Builder(product.this);
+        builder.setMessage("Do you want to exit ?");
+        builder.setTitle("Alert !");
+        builder.setCancelable(false);
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                finish();
+            }
+        });
+
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 }
