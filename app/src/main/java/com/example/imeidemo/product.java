@@ -1,34 +1,24 @@
 package com.example.imeidemo;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.firebase.ui.firestore.paging.FirestorePagingOptions;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 public class product extends AppCompatActivity  {
-
 
     private RecyclerView firestoreList;
 
@@ -100,7 +90,6 @@ public class product extends AppCompatActivity  {
                 }
                 else
                 {
-                    Toast.makeText(product.this, "Via Main Activity", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(product.this,ViewCart.class);
                     intent.putExtra("cname",cnameMain);
                     startActivity(intent);
@@ -108,10 +97,8 @@ public class product extends AppCompatActivity  {
                 }
 
 
-
             }
         });
-
 
     }
 
@@ -125,16 +112,14 @@ public class product extends AppCompatActivity  {
             list_name = itemView.findViewById(R.id.list_name);
             list_price = itemView.findViewById(R.id.list_price);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            list_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String pnm=list_name.getText().toString();
-                    Toast.makeText(product.this, pnm, Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(product.this,ViewProduct.class);
                     intent.putExtra("PRODUCT",pnm);
                     intent.putExtra("cname",cnameMain);
                     startActivity(intent);
-
 
                 }
             });
@@ -142,39 +127,12 @@ public class product extends AppCompatActivity  {
     }
 
 
-      /*  @Override
-        public FirestoreAdapter.ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_single,parent,false);
-            return new FirestoreAdapter.ProductViewHolder(view);
-        }*/
-
-
-
-
-
-  /*
-  No Need for Manual call
-  @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }*/
-
     @Override
     public void onBackPressed()
     {
-
-        // Create the object of
-        // AlertDialog Builder class
         AlertDialog.Builder builder = new AlertDialog.Builder(product.this);
         builder.setMessage("Do you want to exit ?");
-        builder.setTitle("Alert !");
+        builder.setTitle("EXIT");
         builder.setCancelable(false);
 
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {

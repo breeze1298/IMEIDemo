@@ -4,17 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,12 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
-
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +42,7 @@ public class ViewCart extends AppCompatActivity {
 
     //Instance of Firebase
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     private static final String KEY_NAME = "name";
     private static final String KEY_PRICE = "price";
     private static final String KEY_TOTAL_PRICE = "total_price";
@@ -68,6 +61,8 @@ public class ViewCart extends AppCompatActivity {
 
         Intent getData = getIntent();
         cnameViewCart = getData.getStringExtra("cname");
+
+        Toast.makeText(this, "Long hold on the Product Name to remove it from the cart !!", Toast.LENGTH_SHORT).show();
 
        //CHANGED THE QUERY TO GET THE DETAILS ACCORDING TO THE CUSTOMER NAME
         String s=cnameViewCart;
@@ -116,7 +111,6 @@ public class ViewCart extends AppCompatActivity {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
 
                                         String orderDocName=document.getId();
-                                        Toast.makeText(ViewCart.this, orderDocName, Toast.LENGTH_SHORT).show();
                                         loadNote(orderDocName);
 
                                     }
@@ -130,18 +124,28 @@ public class ViewCart extends AppCompatActivity {
         });
 
 
-
     }
 
 
     public class ProductViewHolder extends  RecyclerView.ViewHolder  {
         private TextView list_name, list_price;
+        String customer=cnameViewCart;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
             list_name = itemView.findViewById(R.id.list_name);
             list_price = itemView.findViewById(R.id.list_price);
+
+            list_name.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    String name=list_name.getText().toString();
+                    db.collection(customer).document(name).delete();
+                    Toast.makeText(ViewCart.this, name+" Product Deleted", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            });
 
         }
     }
@@ -173,8 +177,10 @@ public class ViewCart extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(ViewCart.this, customer+"Order placed ", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ViewCart.this, customer+" Order placed ", Toast.LENGTH_LONG).show();
                                     db.collection(customer).document(doc).delete();
+                                    startActivity(new Intent(ViewCart.this,product.class));
+                                    finish();
 
                                 }
                             })
@@ -196,8 +202,6 @@ public class ViewCart extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
 
                         Toast.makeText(ViewCart.this,"Error !! ",Toast.LENGTH_LONG).show();
-                        //Log.d(TAG,e.toString());
-
 
                     }
                 });
@@ -240,7 +244,6 @@ public class ViewCart extends AppCompatActivity {
                 });
 
     }
-
 
 
 }

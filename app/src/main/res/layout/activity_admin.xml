@@ -113,6 +113,6 @@
         android:gravity="start|top"
         android:hint="Description RAM: ROM:  "
         android:inputType="textMultiLine"
-        android:text="Descriptio RAM ROM" />
+        android:text="Description RAM ROM" />
 
 </AbsoluteLayout>

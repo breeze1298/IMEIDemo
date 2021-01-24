@@ -102,8 +102,8 @@ private void savenote() {
         caddress.setText("");
         //Moving to the Products Page with Customer name send through Intent
         Intent intent=new Intent(sign_up.this,MainActivity.class);
-        //intent.putExtra("sig_cname",sig_cname);
         startActivity(intent);
+        finish();
         }
         }).addOnFailureListener(new OnFailureListener() {
          @Override

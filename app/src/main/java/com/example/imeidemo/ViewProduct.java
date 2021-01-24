@@ -2,28 +2,19 @@ package com.example.imeidemo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
-
-import java.sql.Array;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -93,7 +84,6 @@ public class ViewProduct extends AppCompatActivity {
                     p2.setText(price);
                     p3.setText(desc);
                     //Getting the image url and loading the image in the image view
-                    //Context context = pimage.getContext();
                     Picasso.get().load(image).into(pimage);
 
 
@@ -130,15 +120,17 @@ public class ViewProduct extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-
                             Toast.makeText(ViewProduct.this, s1 + " Added to Cart ", Toast.LENGTH_LONG).show();
-
+                            startActivity(new Intent(ViewProduct.this,product.class));
+                            finish();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ViewProduct.this, "Error in Database", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ViewProduct.this, "Error in Getting the Data", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(ViewProduct.this,product.class));
+                            finish();
                         }
                     });
         }

@@ -18,6 +18,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,12 +29,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int PERMISSION_CODE = 100;
     private String imei_number;
     private static final String CUSTOMERNAME = "Customer_Name";
     private static final String IMEI = "IMEI";
-    private Button alog;
     int cnt=0;
+    ImageView imageView;
     //create firebase instance
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -42,49 +42,46 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       /* try {
-            wait(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
-        alog=findViewById(R.id.button_admin);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_EXTERNAL_STORAGE}, 2);
 
-        //Getting IMEI Number
-        /*TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        imei_number = telephonyManager.getDeviceId();*/
+        imageView=findViewById(R.id.welcome);
 
-        imei_number=getDeviceId(MainActivity.this);
-
-        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-
-
-        alog.setOnLongClickListener(new View.OnLongClickListener() {
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 startActivity(new Intent(MainActivity.this,admin_login.class));
                 return false;
             }
         });
-
-        verify();
-
+        
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case 1: {
+            case 2: {
 
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0  && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED) {
+                    //Getting IMEI Number
+                    imei_number=getDeviceId(MainActivity.this);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            verify();
+                        }
+                    }, 3000);
 
                 } else
                 {
                     Toast.makeText(MainActivity.this, "Permission Denied !! ", Toast.LENGTH_SHORT).show();
 
                 }
+
                 return;
             }
         }
+
     }
 
     public void verify()
@@ -129,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
         String deviceId;
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
             deviceId = Settings.Secure.getString(
                     context.getContentResolver(),
                     Settings.Secure.ANDROID_ID);
